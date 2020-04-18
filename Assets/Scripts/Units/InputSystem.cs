@@ -14,38 +14,48 @@ namespace Assets.Scripts.Units
 
 		public void Update(Unit unit)
 		{
-			var inputDirection = GetInputDirection();
-
-			var movementDirection = _forwardDirection * inputDirection;
-
-			unit.Velocity = movementDirection.normalized * unit.Stats.MoveSpeed;
+			if (TryGetInputDirection(out var inputDirection))
+			{
+				var movementDirection = _forwardDirection * inputDirection;
+				unit.Direction = movementDirection.normalized;
+				unit.CurrentSpeed = unit.Stats.MoveSpeed;
+			}
+			else
+			{
+				unit.CurrentSpeed = 0;
+			}
 		}
 
-		private static Vector3 GetInputDirection()
+		private static bool TryGetInputDirection(out Vector3 direction)
 		{
-			var inputDirection = Vector3.zero;
+			direction = Vector3.zero;
+			bool hasInput = false;
 
 			if (Input.GetKey(KeyCode.W))
 			{
-				inputDirection += Vector3.forward;
+				direction += Vector3.forward;
+				hasInput = true;
 			}
 
 			if (Input.GetKey(KeyCode.A))
 			{
-				inputDirection += Vector3.left;
+				direction += Vector3.left;
+				hasInput = true;
 			}
 
 			if (Input.GetKey(KeyCode.S))
 			{
-				inputDirection += Vector3.back;
+				direction += Vector3.back;
+				hasInput = true;
 			}
 
 			if (Input.GetKey(KeyCode.D))
 			{
-				inputDirection += Vector3.right;
+				direction += Vector3.right;
+				hasInput = true;
 			}
 
-			return inputDirection;
+			return hasInput;
 		}
 	}
 }

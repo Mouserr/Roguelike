@@ -21,11 +21,6 @@ namespace Assets.Scripts.Units
 			Value = value;
 		}
 
-		public static implicit operator Observable<T>(T value)
-		{
-			return new Observable<T>(value);
-		}
-
 		public static implicit operator T(Observable<T> observable)
 		{
 			return observable.Value;

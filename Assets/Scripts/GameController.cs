@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Units;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Projectiles;
+using Assets.Scripts.Units;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -11,14 +13,26 @@ namespace Assets.Scripts
 		private Rigidbody _player;
 		[SerializeField]
 		private Animator _playerAnimator;
+		[SerializeField]
+		private LauncherConfig _playerLauncherConfig;
+		[SerializeField]
+		private Transform _playerLaunchTransform;
+
+		[SerializeField]
+		private List<Rigidbody> _enemies;
 
 		private UserInfo _userInfo;
+
 		private UnitsManager _unitsManager;
+		private DamageSystem _damageSystem;
+		private ProjectilesManager _projectilesManager;
 
 		private void Awake()
 		{
 			_userInfo = new UserInfo();
 			_unitsManager = new UnitsManager();
+			_damageSystem = new DamageSystem();
+			_projectilesManager = new ProjectilesManager(_damageSystem);
 		}
 
 		private void Start()
@@ -28,16 +42,40 @@ namespace Assets.Scripts
 
 		public void StartGame()
 		{
-			_unitsManager.Add(new Unit(
-				new Stats
-				{
-					CurrentHealth = 10,
-					MaxHealth = 10,
-					MoveSpeed = 5
-				}, 
-				new InputSystem(_forwardDirection), 
-				new MovementSystem(_player),
-				new AnimatorSystem(_playerAnimator)));
+			_unitsManager.Add(
+				new Unit(
+					_player,
+					new Stats
+					{
+						CurrentHealth = new Observable<float>(10),
+						MaxHealth = new Observable<float>(10),
+						MoveSpeed = new Observable<float>(5),
+						BaseDamage = new Observable<float>(1),
+					},
+					new InputSystem(_forwardDirection),
+					new MovementSystem(_player),
+					new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_playerLauncherConfig, _playerLaunchTransform)),
+					new AnimatorSystem(_playerAnimator)));
+
+			foreach (var enemy in _enemies)
+			{
+				_unitsManager.Add(
+					new Unit(
+						enemy,
+						new Stats()
+						{
+							CurrentHealth = new Observable<float>(10),
+							MaxHealth = new Observable<float>(3),
+							MoveSpeed = new Observable<float>(5),
+							BaseDamage = new Observable<float>(1),
+						},
+						new RandomPatrol(5),
+						new MovementSystem(enemy)
+					)
+					{
+						Fraction = 1
+					});
+			}
 		}
 
 		private void Update()

@@ -5,7 +5,7 @@ namespace Assets.Scripts.Units
 	public class MovementSystem : IBehaviourSystem
 	{
 		private readonly Rigidbody _rigidbody;
-		private readonly float _lowSpeedThresholdSqr;
+		private readonly float _lowSpeedThreshold;
 		public bool IsActive => true;
 
 		public Vector3 Position
@@ -29,25 +29,17 @@ namespace Assets.Scripts.Units
 		public MovementSystem(Rigidbody rigidbody, float lowSpeedThreshold = 0.1f)
 		{
 			_rigidbody = rigidbody;
-			_lowSpeedThresholdSqr = lowSpeedThreshold * lowSpeedThreshold;
+			_lowSpeedThreshold = lowSpeedThreshold;
 		}
 
 		public void Update(Unit unit)
 		{
-			Velocity = unit.Velocity;
-			
-			unit.IsStaying = Velocity.sqrMagnitude < _lowSpeedThresholdSqr;
+			Velocity = unit.Direction * unit.CurrentSpeed;
+			Rotation = Quaternion.LookRotation(unit.Direction);
+
+			unit.IsStaying = unit.CurrentSpeed < _lowSpeedThreshold;
 
 			unit.Position = Position;
-			if (!unit.IsStaying)
-			{
-				Rotation = Quaternion.LookRotation(unit.Velocity);
-				unit.CurrentSpeed = Velocity.magnitude;
-			}
-			else
-			{
-				unit.CurrentSpeed = 0;
-			}
 		}
 	}
 }

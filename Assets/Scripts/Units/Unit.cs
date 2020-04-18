@@ -6,14 +6,18 @@ namespace Assets.Scripts.Units
 	public class Unit
 	{
 		private readonly List<IBehaviourSystem> _behaviours = new List<IBehaviourSystem>();
+		public int Fraction { get; set; }
+		public Rigidbody Rigidbody { get; }
 		public Stats Stats { get; }
 		public Vector3 Position { get; set; }
-		public Vector3 Velocity { get; set; }
+		public Vector3 Direction { get; set; }
 		public float CurrentSpeed { get; set; }
 		public bool IsStaying { get; set; }
+		public bool IsAlive => Stats.CurrentHealth > 0;
 
-		public Unit(Stats stats, params IBehaviourSystem[] behaviours)
+		public Unit(Rigidbody rigidbody, Stats stats, params IBehaviourSystem[] behaviours)
 		{
+			Rigidbody = rigidbody;
 			Stats = stats;
 			foreach (var behaviour in behaviours)
 			{
