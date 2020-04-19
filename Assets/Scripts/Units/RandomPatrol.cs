@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Units
 {
-	public class RandomPatrol : IBehaviourSystem
+	public class RandomPatrol : IBehaviourController
 	{
 		private readonly float _linearMoveTime;
 		private readonly float _idleTime;

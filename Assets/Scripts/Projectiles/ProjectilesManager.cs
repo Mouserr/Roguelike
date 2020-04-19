@@ -59,11 +59,6 @@ namespace Assets.Scripts.Projectiles
 		{
 			if (collision.gameObject.TryGetComponent<UnitLink>(out var unitLink))
 			{
-				if (unitLink.Unit == projectile.Info.Sender)
-				{
-					return;
-				}
-
 				_damageSystem.ApplyDamage(projectile.Info, unitLink.Unit);
 			}
 

@@ -10,7 +10,7 @@ namespace Assets.Scripts
 
 		public void ApplyDamage(ProjectileInfo projectileInfo, Unit unit)
 		{
-			if (unit.IsAlive)
+			if (unit.IsAlive && projectileInfo.Sender != unit)
 			{
 				unit.Stats.CurrentHealth.Value -= projectileInfo.Damage;
 				DamageTaken?.Invoke(unit);

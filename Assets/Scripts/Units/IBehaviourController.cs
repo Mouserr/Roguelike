@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Units
 {
-	public interface IBehaviourSystem
+	public interface IBehaviourController
 	{
 		bool IsActive { get; }
 		void Update(Unit unit);

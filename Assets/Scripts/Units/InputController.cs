@@ -2,12 +2,12 @@
 
 namespace Assets.Scripts.Units
 {
-	public class InputSystem : IBehaviourSystem
+	public class InputController : IBehaviourController
 	{
 		private readonly Quaternion _forwardDirection;
 		public bool IsActive => true;
 
-		public InputSystem(Vector3 forwardDirection)
+		public InputController(Vector3 forwardDirection)
 		{
 			_forwardDirection = Quaternion.Euler(forwardDirection);
 		}

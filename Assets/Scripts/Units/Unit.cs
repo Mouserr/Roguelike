@@ -5,7 +5,7 @@ namespace Assets.Scripts.Units
 {
 	public class Unit
 	{
-		private readonly List<IBehaviourSystem> _behaviours = new List<IBehaviourSystem>();
+		private readonly List<IBehaviourController> _behaviours = new List<IBehaviourController>();
 		public int Fraction { get; set; }
 		public Rigidbody Rigidbody { get; }
 		public Stats Stats { get; }
@@ -15,7 +15,7 @@ namespace Assets.Scripts.Units
 		public bool IsStaying { get; set; }
 		public bool IsAlive => Stats.CurrentHealth > 0;
 
-		public Unit(Rigidbody rigidbody, Stats stats, params IBehaviourSystem[] behaviours)
+		public Unit(Rigidbody rigidbody, Stats stats, params IBehaviourController[] behaviours)
 		{
 			Rigidbody = rigidbody;
 			Stats = stats;
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Units
 			Direction = Rigidbody.transform.forward;
 		}
 
-		public void AddBehaviour(IBehaviourSystem behaviour)
+		public void AddBehaviour(IBehaviourController behaviour)
 		{
 			_behaviours.Add(behaviour);
 		}

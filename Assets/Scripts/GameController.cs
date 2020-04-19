@@ -68,11 +68,11 @@ namespace Assets.Scripts
 						MoveSpeed = new Observable<float>(5),
 						BaseDamage = new Observable<float>(1),
 					},
-					new InputSystem(_forwardDirection),
-					new MovementSystem(_player),
+					new InputController(_forwardDirection),
+					new MovementController(_player),
 					new CollectPickups(),
 					new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_playerLauncherConfig, _player.GetComponentInChildren<LaunchPoint>().transform)),
-					new AnimatorSystem(_playerAnimator)));
+					new AnimatorController(_playerAnimator)));
 
 			_healthBar.Init(playerUnit);
 
@@ -89,7 +89,7 @@ namespace Assets.Scripts
 							BaseDamage = new Observable<float>(1),
 						},
 						new RandomPatrol(5, 1f),
-						new MovementSystem(enemy)
+						new MovementController(enemy)
 					)
 					{
 						Fraction = 1
@@ -109,7 +109,7 @@ namespace Assets.Scripts
 							BaseDamage = new Observable<float>(1),
 						},
 						new RandomPatrol(5, 3),
-						new MovementSystem(enemy),
+						new MovementController(enemy),
 						new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_enemyLauncherConfig, enemy.GetComponentInChildren<LaunchPoint>().transform))
 					)
 					{

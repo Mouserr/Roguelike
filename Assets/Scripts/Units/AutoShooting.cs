@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
-	public class AutoShooting : IBehaviourSystem
+	public class AutoShooting : IBehaviourController
 	{
 		private readonly UnitsManager _unitsManager;
 		private readonly ProjectilesManager _projectilesManager;

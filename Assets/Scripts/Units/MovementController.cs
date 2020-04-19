@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Units
 {
-	public class MovementSystem : IBehaviourSystem
+	public class MovementController : IBehaviourController
 	{
 		private readonly Rigidbody _rigidbody;
 		private readonly float _lowSpeedThreshold;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Units
 			set => _rigidbody.angularVelocity = value;
 		}
 
-		public MovementSystem(Rigidbody rigidbody, float lowSpeedThreshold = 0.1f)
+		public MovementController(Rigidbody rigidbody, float lowSpeedThreshold = 0.1f)
 		{
 			_rigidbody = rigidbody;
 			_lowSpeedThreshold = lowSpeedThreshold;

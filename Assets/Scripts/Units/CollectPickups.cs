@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
-	public class CollectPickups : IBehaviourSystem
+	public class CollectPickups : IBehaviourController
 	{
 		private readonly int _pickupsLayer = LayerMask.GetMask("Pickup");
 		private readonly float _pickupRadius;
