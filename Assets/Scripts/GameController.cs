@@ -23,7 +23,8 @@ namespace Assets.Scripts
 		private Pickup _pickupPrefab;
 		[SerializeField]
 		private GoldLabel _goldLabel;
-
+		[SerializeField]
+		private CameraShakeController _cameraShake;
 		[SerializeField]
 		private List<Rigidbody> _enemies;
 
@@ -42,6 +43,8 @@ namespace Assets.Scripts
 			_pickupsManager = new PickupsManager(_unitsManager, _userInfo, _pickupPrefab);
 			_projectilesManager = new ProjectilesManager(_damageSystem);
 			_goldLabel.Init(_userInfo);
+
+			_damageSystem.DamageTaken += (u) => _cameraShake.Shake(0.5f);
 		}
 
 		private void Start()

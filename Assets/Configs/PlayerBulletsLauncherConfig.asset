@@ -17,5 +17,5 @@ MonoBehaviour:
   ExplosionPrefab: {fileID: 4865037478737060, guid: 3c6a9770554a2499da6dc5e68b870e15,
     type: 3}
   StartSpeed: 30
-  ShootRate: 30
+  ShootRate: 5
   DamageMultiplier: 1
