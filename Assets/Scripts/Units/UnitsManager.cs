@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Units
 {
 	public class UnitsManager
 	{
 		private readonly List<Unit> _units = new List<Unit>();
+
+		public event Action<Unit> UnitKilled;
 
 		public void Add(Unit unit)
 		{
@@ -55,6 +58,7 @@ namespace Assets.Scripts.Units
 
 		public void Kill(Unit unit)
 		{
+			UnitKilled?.Invoke(unit);
 			_units.Remove(unit);
 			Object.Destroy(unit.Rigidbody.gameObject);
 		}

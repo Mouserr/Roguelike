@@ -8,22 +8,28 @@ namespace Assets.Scripts.Units
 		private readonly float _lowSpeedThreshold;
 		public bool IsActive => true;
 
-		public Vector3 Position
+		private Vector3 Position
 		{
 			get => _rigidbody.position;
-			protected set => _rigidbody.MovePosition(value);
+			set => _rigidbody.MovePosition(value);
 		}
 
-		public Quaternion Rotation
+		private Quaternion Rotation
 		{
 			get => _rigidbody.rotation;
 			set => _rigidbody.MoveRotation(value);
 		}
 
-		public Vector3 Velocity
+		private Vector3 Velocity
 		{
 			get => _rigidbody.velocity;
 			set => _rigidbody.velocity = value;
+		}
+
+		private Vector3 AngularVelocity
+		{
+			get => _rigidbody.angularVelocity;
+			set => _rigidbody.angularVelocity = value;
 		}
 
 		public MovementSystem(Rigidbody rigidbody, float lowSpeedThreshold = 0.1f)
@@ -34,10 +40,18 @@ namespace Assets.Scripts.Units
 
 		public void Update(Unit unit)
 		{
-			Velocity = unit.Direction * unit.CurrentSpeed;
-			Rotation = Quaternion.LookRotation(unit.Direction);
-
 			unit.IsStaying = unit.CurrentSpeed < _lowSpeedThreshold;
+			if (unit.IsStaying)
+			{
+				Velocity = Vector3.zero;
+				AngularVelocity = Vector3.zero;
+			}
+			else
+			{
+				Velocity = unit.Direction * unit.CurrentSpeed;
+			}
+			
+			Rotation = Quaternion.LookRotation(unit.Direction);
 
 			unit.Position = Position;
 		}

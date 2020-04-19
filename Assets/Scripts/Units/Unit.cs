@@ -23,6 +23,8 @@ namespace Assets.Scripts.Units
 			{
 				AddBehaviour(behaviour);
 			}
+
+			Direction = Rigidbody.transform.forward;
 		}
 
 		public void AddBehaviour(IBehaviourSystem behaviour)

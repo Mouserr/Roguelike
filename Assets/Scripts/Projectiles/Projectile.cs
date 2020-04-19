@@ -8,7 +8,7 @@ namespace Assets.Scripts.Projectiles
 	{
 		private Rigidbody _owner;
 
-		public event Action<Projectile, Collision> OnHit;
+		public event Action<Projectile, Collision> Hit;
 
 		public Rigidbody Rigidbody
 		{
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Projectiles
 
 		private void OnCollisionEnter(Collision collision)
 		{
-			OnHit?.Invoke(this, collision);
+			Hit?.Invoke(this, collision);
 		}
 	}
 }

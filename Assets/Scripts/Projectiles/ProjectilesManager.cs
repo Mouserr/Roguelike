@@ -36,7 +36,7 @@ namespace Assets.Scripts.Projectiles
 
 			var projectile = _projectilePools[launcher.Config].GetObject();
 			projectile.Init(projectileInfo);
-			projectile.OnHit += OnHit;
+			projectile.Hit += OnHit;
 			projectile.transform.position = launcher.LaunchPoint.position;
 			projectile.transform.rotation = launcher.LaunchPoint.rotation;
 			projectile.gameObject.SetActive(true);
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Projectiles
 
 		private void OnHit(Projectile projectile, Collision collision)
 		{
-			projectile.OnHit -= OnHit;
+			projectile.Hit -= OnHit;
 			if (collision.gameObject.TryGetComponent<UnitLink>(out var unitLink))
 			{
 				_damageSystem.ApplyDamage(projectile.Info, unitLink.Unit);

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Pickups;
 using Assets.Scripts.Projectiles;
+using Assets.Scripts.UI;
 using Assets.Scripts.Units;
 using UnityEngine;
 
@@ -17,6 +19,10 @@ namespace Assets.Scripts
 		private LauncherConfig _playerLauncherConfig;
 		[SerializeField]
 		private Transform _playerLaunchTransform;
+		[SerializeField]
+		private Pickup _pickupPrefab;
+		[SerializeField]
+		private GoldLabel _goldLabel;
 
 		[SerializeField]
 		private List<Rigidbody> _enemies;
@@ -25,6 +31,7 @@ namespace Assets.Scripts
 
 		private UnitsManager _unitsManager;
 		private DamageSystem _damageSystem;
+		private PickupsManager _pickupsManager;
 		private ProjectilesManager _projectilesManager;
 
 		private void Awake()
@@ -32,7 +39,9 @@ namespace Assets.Scripts
 			_userInfo = new UserInfo();
 			_unitsManager = new UnitsManager();
 			_damageSystem = new DamageSystem();
+			_pickupsManager = new PickupsManager(_unitsManager, _userInfo, _pickupPrefab);
 			_projectilesManager = new ProjectilesManager(_damageSystem);
+			_goldLabel.Init(_userInfo);
 		}
 
 		private void Start()
@@ -54,6 +63,7 @@ namespace Assets.Scripts
 					},
 					new InputSystem(_forwardDirection),
 					new MovementSystem(_player),
+					new CollectPickups(),
 					new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_playerLauncherConfig, _playerLaunchTransform)),
 					new AnimatorSystem(_playerAnimator)));
 
