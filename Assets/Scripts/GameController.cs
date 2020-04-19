@@ -18,15 +18,19 @@ namespace Assets.Scripts
 		[SerializeField]
 		private LauncherConfig _playerLauncherConfig;
 		[SerializeField]
-		private Transform _playerLaunchTransform;
+		private LauncherConfig _enemyLauncherConfig;
 		[SerializeField]
 		private Pickup _pickupPrefab;
 		[SerializeField]
 		private GoldLabel _goldLabel;
 		[SerializeField]
+		private HealthBar _healthBar;
+		[SerializeField]
 		private CameraShakeController _cameraShake;
 		[SerializeField]
 		private List<Rigidbody> _enemies;
+		[SerializeField]
+		private List<Rigidbody> _shootingEnemies;
 
 		private UserInfo _userInfo;
 
@@ -54,7 +58,7 @@ namespace Assets.Scripts
 
 		public void StartGame()
 		{
-			_unitsManager.Add(
+			var playerUnit = _unitsManager.Add(
 				new Unit(
 					_player,
 					new Stats
@@ -67,8 +71,10 @@ namespace Assets.Scripts
 					new InputSystem(_forwardDirection),
 					new MovementSystem(_player),
 					new CollectPickups(),
-					new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_playerLauncherConfig, _playerLaunchTransform)),
+					new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_playerLauncherConfig, _player.GetComponentInChildren<LaunchPoint>().transform)),
 					new AnimatorSystem(_playerAnimator)));
+
+			_healthBar.Init(playerUnit);
 
 			foreach (var enemy in _enemies)
 			{
@@ -82,8 +88,29 @@ namespace Assets.Scripts
 							MoveSpeed = new Observable<float>(5),
 							BaseDamage = new Observable<float>(1),
 						},
-						new RandomPatrol(5),
+						new RandomPatrol(5, 1f),
 						new MovementSystem(enemy)
+					)
+					{
+						Fraction = 1
+					});
+			}
+
+			foreach (var enemy in _shootingEnemies)
+			{
+				_unitsManager.Add(
+					new Unit(
+						enemy,
+						new Stats()
+						{
+							CurrentHealth = new Observable<float>(10),
+							MaxHealth = new Observable<float>(3),
+							MoveSpeed = new Observable<float>(5),
+							BaseDamage = new Observable<float>(1),
+						},
+						new RandomPatrol(5, 3),
+						new MovementSystem(enemy),
+						new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_enemyLauncherConfig, enemy.GetComponentInChildren<LaunchPoint>().transform))
 					)
 					{
 						Fraction = 1

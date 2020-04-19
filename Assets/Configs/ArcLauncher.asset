@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0da5e0808465064f94c8c71bfd9b2d3, type: 3}
+  m_Name: ArcLauncher
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 9114694495269709831, guid: 3a9c34120b3b85e4e9ae9fdca76b0970,
+    type: 3}
+  ExplosionPrefab: {fileID: 4865037478737060, guid: 04eafa52256c587458bf84858ca44c4d,
+    type: 3}
+  StartSpeed: 5
+  ShootRate: 0.5
+  DamageMultiplier: 1
+  StartAngle: 45

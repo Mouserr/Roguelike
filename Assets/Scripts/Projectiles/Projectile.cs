@@ -6,7 +6,7 @@ namespace Assets.Scripts.Projectiles
 	[RequireComponent(typeof(Rigidbody))]
 	public class Projectile : MonoBehaviour
 	{
-		private Rigidbody _owner;
+		private Rigidbody _rigidbody;
 
 		public event Action<Projectile, Collision> Hit;
 
@@ -14,12 +14,12 @@ namespace Assets.Scripts.Projectiles
 		{
 			get
 			{
-				if (!_owner)
+				if (!_rigidbody)
 				{
-					_owner = GetComponent<Rigidbody>();
+					_rigidbody = GetComponent<Rigidbody>();
 				}
 
-				return _owner;
+				return _rigidbody;
 			}
 		}
 		public ProjectileInfo Info { get; private set; }

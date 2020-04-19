@@ -23,8 +23,16 @@ namespace Assets.Scripts.Projectiles
 
 		public void RegisterLauncher(LauncherConfig launcher)
 		{
-			_projectilePools.Add(launcher, new GameObjectPool<Projectile>(_bulletsRoot.transform, launcher.ProjectilePrefab, 30));
-			_explosionPools.Add(launcher, new GameObjectPool<Transform>(_explosionsRoot.transform, launcher.ExplosionPrefab, 30));
+			if (!_projectilePools.ContainsKey(launcher))
+			{
+				_projectilePools.Add(launcher, new GameObjectPool<Projectile>(_bulletsRoot.transform, launcher.ProjectilePrefab, 30));
+			}
+
+			if (!_explosionPools.ContainsKey(launcher))
+			{
+				_explosionPools.Add(launcher,
+					new GameObjectPool<Transform>(_explosionsRoot.transform, launcher.ExplosionPrefab, 30));
+			}
 		}
 
 		public bool Launch(Launcher launcher, ProjectileInfo projectileInfo)
@@ -49,12 +57,17 @@ namespace Assets.Scripts.Projectiles
 
 		private void OnHit(Projectile projectile, Collision collision)
 		{
-			projectile.Hit -= OnHit;
 			if (collision.gameObject.TryGetComponent<UnitLink>(out var unitLink))
 			{
+				if (unitLink.Unit == projectile.Info.Sender)
+				{
+					return;
+				}
+
 				_damageSystem.ApplyDamage(projectile.Info, unitLink.Unit);
 			}
 
+			projectile.Hit -= OnHit;
 			var launcherConfig = projectile.Info.Launcher.Config;
 			_projectilePools[launcherConfig].ReleaseObject(projectile);
 

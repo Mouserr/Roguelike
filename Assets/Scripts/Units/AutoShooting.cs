@@ -37,7 +37,8 @@ namespace Assets.Scripts.Units
 				}
 			}
 
-			unit.Direction = _chosenEnemy.Position - unit.Position;
+			var direction = _chosenEnemy.Position - unit.Position;
+			unit.Direction = new Vector3(direction.x, 0, direction.z);
 
 			_projectilesManager.Launch(_launcher, new ProjectileInfo
 			{

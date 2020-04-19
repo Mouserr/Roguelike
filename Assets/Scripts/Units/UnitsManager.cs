@@ -10,11 +10,12 @@ namespace Assets.Scripts.Units
 
 		public event Action<Unit> UnitKilled;
 
-		public void Add(Unit unit)
+		public Unit Add(Unit unit)
 		{
 			_units.Add(unit);
 			var unitLink = unit.Rigidbody.gameObject.AddComponent<UnitLink>();
 			unitLink.Init(unit);
+			return unit;
 		}
 
 		public void Update()
