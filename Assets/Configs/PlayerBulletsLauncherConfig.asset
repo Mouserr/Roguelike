@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: a8582dfdac7c95846a123d0ccb4b3ba5, type: 3}
   m_Name: PlayerBulletsLauncherConfig
-  m_EditorClassIdentifier: Assembly-CSharp:Assets.Scripts.Projectiles:LinearLauncherConfig
+  m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 8513703944868239088, guid: c4b4b81382c254a999d09f9375fbe2c7,
     type: 3}
   ExplosionPrefab: {fileID: 4865037478737060, guid: 3c6a9770554a2499da6dc5e68b870e15,
     type: 3}
-  StartSpeed: 35
-  ShootRate: 10
+  StartSpeed: 30
+  ShootRate: 30
   DamageMultiplier: 1
