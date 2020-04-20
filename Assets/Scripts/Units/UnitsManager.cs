@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Units
 {
@@ -61,7 +60,6 @@ namespace Assets.Scripts.Units
 		{
 			UnitKilled?.Invoke(unit);
 			_units.Remove(unit);
-			Object.Destroy(unit.Rigidbody.gameObject);
 		}
 	}
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-	public class CameraShakeController : MonoBehaviour
+	public class CameraController : MonoBehaviour
 	{
 		private CinemachineBasicMultiChannelPerlin _virtualCameraNoise;
 		private float _shakeTimeLeft;
@@ -18,6 +18,12 @@ namespace Assets.Scripts
 		private void Awake()
 		{
 			_virtualCameraNoise = _camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+		}
+
+		public void Init(Transform player)
+		{
+			_camera.Follow = player;
+			_camera.LookAt = player;
 		}
 
 		public void Shake(float duration)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Configuration;
 using UnityEngine;
 
 namespace Assets.Scripts.Units
@@ -6,6 +7,7 @@ namespace Assets.Scripts.Units
 	public class Unit
 	{
 		private readonly List<IBehaviourController> _behaviours = new List<IBehaviourController>();
+		public UnitConfig Config { get; set; }
 		public int Fraction { get; set; }
 		public Rigidbody Rigidbody { get; }
 		public Stats Stats { get; }

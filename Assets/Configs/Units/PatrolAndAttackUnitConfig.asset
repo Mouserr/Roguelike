@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 927e04b742c5ed8468baadd477cacdff, type: 3}
+  m_Name: PatrolAndAttackUnitConfig
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8342947972711579613, guid: d2de066174d6eff41bd9d30e6deb5a59, type: 3}
+  _maxHealth: 10
+  _moveSpeed: 5
+  _baseDamage: 1
+  _linearMoveTime: 5
+  _idleTime: 3
+  _launcherConfig: {fileID: 11400000, guid: 18c76eb0f4578f94b9a1b0834046ce78, type: 2}

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Pickups;
+﻿using Assets.Scripts.Pickups;
 using Assets.Scripts.Projectiles;
 using Assets.Scripts.UI;
 using Assets.Scripts.Units;
@@ -10,27 +9,15 @@ namespace Assets.Scripts
 	public class GameController : MonoBehaviour
 	{
 		[SerializeField]
-		private Vector3 _forwardDirection;
-		[SerializeField]
-		private Rigidbody _player;
-		[SerializeField]
-		private Animator _playerAnimator;
-		[SerializeField]
-		private LauncherConfig _playerLauncherConfig;
-		[SerializeField]
-		private LauncherConfig _enemyLauncherConfig;
-		[SerializeField]
 		private Pickup _pickupPrefab;
 		[SerializeField]
 		private GoldLabel _goldLabel;
 		[SerializeField]
 		private HealthBar _healthBar;
 		[SerializeField]
-		private CameraShakeController _cameraShake;
+		private CameraController _camera;
 		[SerializeField]
-		private List<Rigidbody> _enemies;
-		[SerializeField]
-		private List<Rigidbody> _shootingEnemies;
+		private LevelController _levelController;
 
 		private UserInfo _userInfo;
 
@@ -48,7 +35,7 @@ namespace Assets.Scripts
 			_projectilesManager = new ProjectilesManager(_damageSystem);
 			_goldLabel.Init(_userInfo);
 
-			_damageSystem.DamageTaken += (u) => _cameraShake.Shake(0.5f);
+			_damageSystem.DamageTaken += (u) => _camera.Shake(0.5f);
 		}
 
 		private void Start()
@@ -58,64 +45,9 @@ namespace Assets.Scripts
 
 		public void StartGame()
 		{
-			var playerUnit = _unitsManager.Add(
-				new Unit(
-					_player,
-					new Stats
-					{
-						CurrentHealth = new Observable<float>(10),
-						MaxHealth = new Observable<float>(10),
-						MoveSpeed = new Observable<float>(5),
-						BaseDamage = new Observable<float>(1),
-					},
-					new InputController(_forwardDirection),
-					new MovementController(_player),
-					new CollectPickups(),
-					new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_playerLauncherConfig, _player.GetComponentInChildren<LaunchPoint>().transform)),
-					new AnimatorController(_playerAnimator)));
-
-			_healthBar.Init(playerUnit);
-
-			foreach (var enemy in _enemies)
-			{
-				_unitsManager.Add(
-					new Unit(
-						enemy,
-						new Stats()
-						{
-							CurrentHealth = new Observable<float>(10),
-							MaxHealth = new Observable<float>(3),
-							MoveSpeed = new Observable<float>(5),
-							BaseDamage = new Observable<float>(1),
-						},
-						new RandomPatrol(5, 1f),
-						new MovementController(enemy)
-					)
-					{
-						Fraction = 1
-					});
-			}
-
-			foreach (var enemy in _shootingEnemies)
-			{
-				_unitsManager.Add(
-					new Unit(
-						enemy,
-						new Stats()
-						{
-							CurrentHealth = new Observable<float>(10),
-							MaxHealth = new Observable<float>(3),
-							MoveSpeed = new Observable<float>(5),
-							BaseDamage = new Observable<float>(1),
-						},
-						new RandomPatrol(5, 3),
-						new MovementController(enemy),
-						new AutoShooting(_unitsManager, _projectilesManager, new Launcher(_enemyLauncherConfig, enemy.GetComponentInChildren<LaunchPoint>().transform))
-					)
-					{
-						Fraction = 1
-					});
-			}
+			var player = _levelController.StartLevel(_unitsManager, _projectilesManager);
+			_camera.Init(player.Rigidbody.transform);
+			_healthBar.Init(player);
 		}
 
 		private void Update()

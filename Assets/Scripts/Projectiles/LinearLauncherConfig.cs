@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Projectiles
 {
-	[CreateAssetMenu(menuName = "Launchers/LinearLauncher")]
+	[CreateAssetMenu(menuName = "Config/Launcher/LinearLauncher")]
 	public class LinearLauncherConfig : LauncherConfig
 	{
 		public override void Launch(Rigidbody projectile, ProjectileInfo projectileInfo)

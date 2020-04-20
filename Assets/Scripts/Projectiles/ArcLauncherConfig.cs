@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Projectiles
 {
-	[CreateAssetMenu(menuName = "Launchers/ArcLauncher")]
+	[CreateAssetMenu(menuName = "Config/Launcher/ArcLauncher")]
 	public class ArcLauncherConfig : LauncherConfig
 	{
 		public float StartAngle;
